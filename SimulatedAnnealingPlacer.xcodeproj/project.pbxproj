@@ -8,12 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		D07E33C620637C7500A2B7F8 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D07E33C520637C7500A2B7F8 /* main.cpp */; };
+		D07F3CE32063807B00840987 /* consola.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = D07F3CE12063803D00840987 /* consola.ttf */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D07F3CE22063806000840987 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				D07F3CE32063807B00840987 /* consola.ttf in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		D07E33C220637C7500A2B7F8 /* SimulatedAnnealingPlacer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimulatedAnnealingPlacer; sourceTree = BUILT_PRODUCTS_DIR; };
 		D07E33C520637C7500A2B7F8 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		D07E33E920637E1A00A2B7F8 /* SAPlacer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAPlacer.h; sourceTree = "<group>"; };
+		D07F3CE12063803D00840987 /* consola.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = consola.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +71,7 @@
 		D07E33C720637C7500A2B7F8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D07F3CE12063803D00840987 /* consola.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -69,6 +85,7 @@
 			buildPhases = (
 				D07E33BF20637C7500A2B7F8 /* Sources */,
 				D07E33C020637C7500A2B7F8 /* Frameworks */,
+				D07F3CE22063806000840987 /* CopyFiles */,
 			);
 			buildRules = (
 			);
