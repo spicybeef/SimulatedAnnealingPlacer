@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <ctime>
+#include <cmath>
 
 // SFML Includes
 #include <SFML/Graphics.hpp>
