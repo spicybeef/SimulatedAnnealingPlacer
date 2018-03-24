@@ -101,7 +101,8 @@ typedef struct
 
 typedef struct
 {
-    char                                        *filename;              ///< Current filename
+    char                                        *inputFilename;         ///< Input filename
+    char                                        *outputFilename;        ///< Output filename
 
     float                                       cellSize;               ///< Current cellsize
     float                                       cellOffset;             ///< Cell offset for maximized dimension
@@ -129,6 +130,7 @@ typedef struct
 void doSimulatedAnnealing(placerStruct_t *placerStruct);
 
 bool parseInputFile(std::ifstream *inputFile, parsedInputStruct_t *inputStruct);
+bool outputPlacementFile(std::ofstream *outputFile, parsedInputStruct_t *inputStruct, placerStruct_t *placerStruct);
 int getRandomInt(int i);
 double getRandomDouble(void);
 drawPosStruct_t getGridCellCoordinate(placerStruct_t *placerStruct, unsigned int col, unsigned int row);

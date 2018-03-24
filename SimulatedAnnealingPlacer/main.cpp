@@ -20,8 +20,18 @@ placerStruct_t *placer = new placerStruct_t();
 int main(int argc, char **argv)
 {
     unsigned int i, swapCount;
+    size_t lastindex;
+    std::string inputName;
+    std::string placement = "_placement.txt";
+    std::string outputName;
 	// File handling
-    placer->filename = argv[1];
+    // Messy... but don't care right now!
+    placer->inputFilename = argv[1];
+    inputName = placer->inputFilename;
+    lastindex = inputName.find_last_of(".");
+    inputName = inputName.substr(0, lastindex);
+    outputName = inputName + placement;
+    placer->outputFilename = const_cast<char *>(outputName.c_str());
     //placer->filename = const_cast<char *>("..\\..\\benchmarks\\cm151a.txt");
 	// Viewport size
     const sf::Vector2u viewportSize(
@@ -59,21 +69,31 @@ int main(int argc, char **argv)
     };
 
     // Filename to read in is the second argument
-    std::ifstream myfile(placer->filename, std::ios::in);
+    std::ifstream myInputFile(placer->inputFilename, std::ios::in);
+    std::ofstream myOutputFile(placer->outputFilename, std::ios::out);
 
-    // Check if file was opened properly
-    if(myfile.is_open())
+    // Check if both files were opened properly
+    if(myOutputFile.is_open())
     {
-        std::cout << "File " << placer->filename << " opened! Here's what's in it:" << std::endl;
+        std::cout << "File " << placer->outputFilename << " opened for writing!" << std::endl;
     }
     else
     {
-        std::cout << "FATAL ERROR! File " << placer->filename << " could not be opened!" << std::endl;
+        std::cout << "FATAL ERROR! File " << placer->outputFilename << " could not be opened!" << std::endl;
+        return -1;
+    }
+    if(myInputFile.is_open())
+    {
+        std::cout << "File " << placer->inputFilename << " opened for reading! Here's what's in it:" << std::endl;
+    }
+    else
+    {
+        std::cout << "FATAL ERROR! File " << placer->inputFilename << " could not be opened!" << std::endl;
         return -1;
     }
 
     // Parse input file
-    parseInputFile(&myfile, input);
+    parseInputFile(&myInputFile, input);
 
     // Get a grid, only need to do this once since it is static
     backgroundGrid = generateGrid(input, placer);
@@ -109,6 +129,11 @@ int main(int argc, char **argv)
     { 
         // Run our simulated annealing
         doSimulatedAnnealing(placer);
+        if(placer->currentState == STATE_FINISHED)
+        {
+            outputPlacementFile(&myOutputFile, input, placer);
+            return 1;
+        }
         swapCount++;
         // Only update every so often to speed up process
         if(swapCount < static_cast<unsigned int>(0.01 * static_cast<double>(placer->movesPerTempDec)))
@@ -403,6 +428,18 @@ bool parseInputFile(std::ifstream *inputFile, parsedInputStruct_t *inputStruct)
     }
 
 
+    return true;
+}
+
+bool outputPlacementFile(std::ofstream *outputFile, parsedInputStruct_t *inputStruct, placerStruct_t *placerStruct)
+{
+    unsigned int i;
+    
+    for(i = 0; i < inputStruct->numCells; i++)
+    {
+        (*outputFile) << std::to_string(i) << " " << placerStruct->cells[i].pos.row << " " << placerStruct->cells[i].pos.col << std::endl;
+    }
+    outputFile->close();
     return true;
 }
 
@@ -789,7 +826,7 @@ std::string getInfoportString(placerStruct_t *placerStruct)
         default:
             break;
     }
-    stringStream << "Filename:    " << placer->filename;
+    stringStream << "Filename:    " << placer->inputFilename;
 
     return stringStream.str();
 }
